@@ -2,13 +2,26 @@
 SLASH_GOTRAIN1 = "/gotrain"
 
 local function GoTrainHandler()
-  numSkills = GetNumSkillLines()
-  print(numSkills)
-  for i = 1, GetNumSkillLines() do
-    local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, _, _ = GetSkillLineInfo(i)
-    print(skillName)
+    local numSkills = GetNumSkillLines()
+    local playerProfessions = {}
+    -- Iterate through each profession index
+    for i = 1, GetNumSkillLines() do
+        local skillName, isHeader, _, skillRank, _, _, skillMaxRank, _, _, _, _ = GetSkillLineInfo(i)
 
-  end
+        -- If it's not a header and matches known professions, add to the list
+        if not isHeader and
+            (skillName == "Alchemy" or skillName == "Blacksmithing" or skillName == "Enchanting" or skillName ==
+                "Engineering" or skillName == "Herbalism" or skillName == "Leatherworking" or skillName == "Mining" or
+                skillName == "Skinning" or skillName == "Tailoring" or skillName == "First Aid" or skillName ==
+                "Cooking" or skillName == "Fishing") then
+            table.insert(playerProfessions, skillName .. " (" .. skillRank .. "/" .. skillMaxRank .. ")")
+        end
+    end
+    -- Print the contents of the playerProfessions table to the chat frame
+    for _, profession in ipairs(playerProfessions) do
+        -- Print each profession with a specific format
+        print("|cff00ff00[Profession Notifier]:|r " .. profession)
+    end
 end
 
 -- Tell WoW about the command
