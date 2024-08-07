@@ -14,13 +14,20 @@ local function GoTrainHandler()
                 "Engineering" or skillName == "Herbalism" or skillName == "Leatherworking" or skillName == "Mining" or
                 skillName == "Skinning" or skillName == "Tailoring" or skillName == "First Aid" or skillName ==
                 "Cooking" or skillName == "Fishing") then
-            table.insert(playerProfessions, skillName .. " (" .. skillRank .. "/" .. skillMaxRank .. ")")
+            -- Add the skillName, rank, and index to the playerProfessions table
+            table.insert(playerProfessions, {
+                name = skillName,
+                rank = skillRank,
+                maxRank = skillMaxRank,
+                index = i
+            })
         end
     end
     -- Print the contents of the playerProfessions table to the chat frame
     for _, profession in ipairs(playerProfessions) do
-        -- Print each profession with a specific format
-        print("|cff00ff00[Profession Notifier]:|r " .. profession)
+        -- Print each profession with its index and rank
+        print("|cff00ff00[Profession Notifier]:|r " .. profession.name .. " (" .. profession.rank .. "/" ..
+                  profession.maxRank .. ") Index: " .. profession.index)
     end
 end
 
