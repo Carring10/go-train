@@ -1,9 +1,16 @@
 -- Ingame slash command, SLASH_{name}{number} registers it to the function
 SLASH_GOTRAIN1 = "/gotrain"
 
-local function GoTrainHandler()
+function GoTrainHandler()
+    setCraftableItems()
+
     -- All spells in object
     function printCraftableItemIds(items)
+        if items == nil then
+            print("No craftable items to display.")
+            return
+        end
+
         for key, value in pairs(items) do
             for _, item in ipairs(value) do
                 print("Craftable Item ID: " .. item.id)
@@ -12,7 +19,8 @@ local function GoTrainHandler()
             end
         end
     end
-    -- printCraftableItemIds(CraftableItems)
+    
+    printCraftableItemIds(CraftableItems)
 
     -- Gather player's already learned profession skills
     local knownSkills = {}
@@ -28,6 +36,8 @@ local function GoTrainHandler()
     for _, name in ipairs(knownSkills) do
         print(name)
     end
+
+    gatherProfessions()
 end
 
 -- Tell WoW about the command
