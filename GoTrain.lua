@@ -2,7 +2,20 @@
 SLASH_GOTRAIN1 = "/gotrain"
 
 function GoTrainHandler()
-    setCraftableItems()
+    -- Function to set CraftableItems based on the profession
+    function setCraftableItems()
+        local professionName = GetTradeSkillLine() -- Get the active profession name
+        print("PROFESSION NAME: ", professionName)
+
+        if professionName == "Cooking" then
+            setCookingItems()
+        elseif professionName == "First Aid" then
+            setFirstAidItems()
+        else
+            print("No craftable items available for this profession.")
+            CraftableItems = nil
+        end
+    end
 
     -- All spells in object
     function printCraftableItemIds(items)
@@ -14,12 +27,14 @@ function GoTrainHandler()
         for key, value in pairs(items) do
             for _, item in ipairs(value) do
                 print("Craftable Item ID: " .. item.id)
-                name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(item.id)
+                local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(item.id)
                 print("SPELL NAME: " .. name .. " DESCRIPTION: " .. GetSpellDescription(item.id))
             end
         end
     end
-    
+
+    -- Call the function to set and print craftable items
+    setCraftableItems()
     printCraftableItemIds(CraftableItems)
 
     -- Gather player's already learned profession skills

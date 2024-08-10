@@ -1,9 +1,4 @@
-function setCraftableItems()
-    local professionName = GetTradeSkillLine()
-    if professionName ~= "First Aid" then
-        return
-    end
-
+function setFirstAidItems()
     CraftableItems = {
         [1] = {{
             id = 3275
