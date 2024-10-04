@@ -17,12 +17,12 @@ function gatherProfessions()
     end
 
     -- Print the collected profession names
-    if #currentProfessions > 0 then
-        print("Your Professions:")
-        for _, name in ipairs(currentProfessions) do
-            print(name)
-        end
-    else
-        print("No professions found.")
-    end
+    -- if #currentProfessions > 0 then
+    --     print("Your Professions:")
+    --     for _, name in ipairs(currentProfessions) do
+    --         print(name)
+    --     end
+    -- else
+    --     print("No professions found.")
+    -- end
 end
