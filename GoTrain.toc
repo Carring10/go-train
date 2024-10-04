@@ -8,3 +8,4 @@ Professions/FirstAid.lua
 Professions/Cooking.lua
 GoTrain.lua
 Utils.lua
+GoTrainUI.lua

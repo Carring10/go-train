@@ -4,6 +4,7 @@ SLASH_GOTRAIN1 = "/gotrain"
 function GoTrainHandler()
     -- Gather player's already learned profession skills
     local knownSkills = {}
+    local professionItemsNotKnown = {}
 
     local tradeskillName, currentLevel, maxLevel, skillLineModifier = GetTradeSkillLine()
 
@@ -37,7 +38,6 @@ function GoTrainHandler()
 
     -- All spells in object
     function printCraftableItemIds(items)
-        local professionItemsNotKnown = {}
 
         if items == nil then
             print("No craftable items to display.")
@@ -75,6 +75,9 @@ function GoTrainHandler()
     -- Call the function to set and print craftable items
     setCraftableItems()
     printCraftableItemIds(CraftableItems)
+
+    -- Call the function to create the UI when the addon is loaded
+    CreateProfessionUI(professionItemsNotKnown)
 
 end
 
