@@ -1,5 +1,5 @@
 -- Function to create a UI panel with unlearned professions
-function CreateUnlearnedProfessionsPanel(notLearnedProfessions)
+function CreateGoTrainPanel(notLearnedProfessions)
     -- Create the frame for unlearned professions
     local unlearnedFrame = CreateFrame("Frame", "UnlearnedProfessionsFrame", TradeSkillFrame)
     unlearnedFrame:SetSize(200, 200)
@@ -13,7 +13,7 @@ function CreateUnlearnedProfessionsPanel(notLearnedProfessions)
     -- Add a title to the frame
     local title = unlearnedFrame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     title:SetPoint("TOP", unlearnedFrame, "TOP", 0, -10)
-    title:SetText("Unlearned Professions")
+    title:SetText("Not Learned Professions")
 
     -- Fetch unlearned professions and add them as text
     -- local unlearnedProfessions = GetUnlearnedProfessions()
@@ -42,11 +42,10 @@ function CreateProfessionUI(professionItemsNotKnown)
     professionTab.icon:SetTexture("Interface\\ICONS\\INV_Misc_Book_09")
 
     -- Create the unlearned professions panel but keep it hidden initially
-    local unlearnedProfessionsFrame = CreateUnlearnedProfessionsPanel(professionItemsNotKnown)
+    local unlearnedProfessionsFrame = CreateGoTrainPanel(professionItemsNotKnown)
 
     -- Set up the button click event to toggle the unlearned professions panel
     professionTab:SetScript("OnClick", function()
-      print("works")
         if unlearnedProfessionsFrame:IsShown() then
             unlearnedProfessionsFrame:Hide()
         else

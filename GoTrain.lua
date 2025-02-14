@@ -2,6 +2,21 @@
 local knownSkills = {}
 local professionItemsNotKnown = {}
 
+-- Set the craftable items for the current profession
+function setAllCraftableItems()
+    local professionName = GetTradeSkillLine() -- Get the active profession name
+    print("PROFESSION NAME: ", professionName)
+
+    if professionName == "Cooking" then
+        setCookingItems()
+    elseif professionName == "First Aid" then
+        setFirstAidItems()
+    else
+        print("No craftable items available for this profession.")
+        CraftableItems = nil
+    end
+end
+
 -- Update profession data when a new profession window is opened
 function updateProfessionData()
     -- Clear the tables to reset for new profession data
@@ -23,44 +38,8 @@ function updateProfessionData()
     end
 end
 
--- Event handler for profession window
-function OnEvent(self, event, ...)
-    print(event)
-    if event == "TRADE_SKILL_SHOW" then
-        -- Update the profession data when a new profession window is shown
-        updateProfessionData()
-    elseif event == "TRADE_SKILL_CLOSE" then
-        -- Clear data when profession window is closed
-        knownSkills = {}
-        professionItemsNotKnown = {}
-    end
-end
-
--- Initialize the event frame
-function initializeEventFrame()
-    local frame = CreateFrame("Frame")
-    frame:RegisterEvent("TRADE_SKILL_SHOW")
-    frame:RegisterEvent("TRADE_SKILL_CLOSE")
-    frame:SetScript("OnEvent", OnEvent)
-end
-
--- Set the craftable items for the current profession
-function setCraftableItems()
-    local professionName = GetTradeSkillLine() -- Get the active profession name
-    print("PROFESSION NAME: ", professionName)
-
-    if professionName == "Cooking" then
-        setCookingItems()
-    elseif professionName == "First Aid" then
-        setFirstAidItems()
-    else
-        print("No craftable items available for this profession.")
-        CraftableItems = nil
-    end
-end
-
 -- Print the craftable item IDs
-function printCraftableItemIds(items)
+function printNotLearnedItems(items)
     if items == nil then
         print("No craftable items to display.")
         return
@@ -93,14 +72,37 @@ function printCraftableItemIds(items)
     end
 end
 
+-- Event handler for profession window
+function OnEvent(self, event, ...)
+    print(event)
+    if event == "TRADE_SKILL_SHOW" then
+        -- Update the profession data when a new profession window is shown
+        -- updateProfessionData()
+        -- setAllCraftableItems()
+        print("SHOW")
+    elseif event == "TRADE_SKILL_CLOSE" then
+        -- Clear data when profession window is closed
+        knownSkills = {}
+        professionItemsNotKnown = {}
+    end
+end
+
+-- Initialize the event frame
+function initializeEventFrame()
+    local frame = CreateFrame("Frame")
+    frame:RegisterEvent("TRADE_SKILL_SHOW")
+    frame:RegisterEvent("TRADE_SKILL_CLOSE")
+    frame:SetScript("OnEvent", OnEvent)
+end
+
 -- Main handler function for the /gotrain slash command
 function GoTrainHandler()
     -- Initialize event listener
+    updateProfessionData()
     initializeEventFrame()
-
     -- Set craftable items and print the IDs
-    setCraftableItems()
-    printCraftableItemIds(CraftableItems)
+    setAllCraftableItems()
+    printNotLearnedItems(CraftableItems)
 
     -- Create the profession UI with unknown items
     CreateProfessionUI(professionItemsNotKnown)
